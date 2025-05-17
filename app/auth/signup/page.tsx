@@ -1,5 +1,5 @@
 function SignupPage() {
-  return <div>Signup Page</div>;
+  return <div className="text-2xl text-primary">Signup Page</div>;
 }
 
 export default SignupPage;
