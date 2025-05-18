@@ -1,7 +1,13 @@
+import Sidebar from "@/components/Sidebar";
 import ChatPage from "./page";
 
 export default function RootLayout({}: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <ChatPage />;
+  return (
+    <div className="flex">
+      <Sidebar />
+      <ChatPage />
+    </div>
+  );
 }

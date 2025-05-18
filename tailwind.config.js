@@ -35,9 +35,6 @@ module.exports = {
           foreground: "hsl(var(--accent-foreground))",
         },
       },
-      textColor: {
-        primary: "#4338ca", // Your existing custom text color
-      },
     },
   },
   plugins: [],
