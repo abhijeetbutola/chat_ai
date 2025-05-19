@@ -5,7 +5,7 @@ export default function RootLayout({}: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex w-full">
+    <div className="flex w-full h-full">
       <Sidebar />
       <ChatPage />
     </div>
