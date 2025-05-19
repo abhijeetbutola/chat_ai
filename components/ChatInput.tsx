@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Button from "./Button";
 
 function ChatInput() {
@@ -14,10 +15,16 @@ function ChatInput() {
             // Send message
           }
         }}
-        className="w-full py-3 resize-none px-3 rounded-md border text-sm bg-secondary-foreground"
+        className="w-full py-2.5 resize-none px-3 rounded-md border text-sm bg-secondary-foreground"
       ></textarea>
-      <Button className="bg-primary text-primary-foreground px-3.5 py-2.5 rounded">
-        Submit
+      <Button className="flex gap-1 justify-center items-center bg-primary text-primary-foreground text-sm font-medium px-3.5 py-2.5 rounded">
+        <Image
+          src={"./icons/submitArrow.svg"}
+          alt="Submit button arrow"
+          width={14}
+          height={14}
+        />
+        <span>Submit</span>
       </Button>
     </div>
   );

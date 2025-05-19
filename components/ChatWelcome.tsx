@@ -1,9 +1,8 @@
-import ChatInput from "./ChatInput";
 import ChatOptionsCard from "./ChatOptionsCard";
 
 function ChatWelcome() {
   return (
-    <div className="flex flex-col h-full pt-20 pb-6 px-[180px]">
+    <div className="flex flex-col h-full pb-6">
       <p className="text-3xl font-semibold">
         Hey, I’m Chat AI.
         <span className="text-muted-foreground font-medium">
@@ -14,7 +13,6 @@ function ChatWelcome() {
       <div className="mt-20 h-full">
         <ChatOptionsCard />
       </div>
-      <ChatInput />
     </div>
   );
 }

@@ -65,9 +65,7 @@ function ChatOptionsCard() {
       {chatOptions.map(({ id, icon, title, description, backgroundColor }) => (
         <div key={id} className="flex flex-col gap-6 border rounded-lg p-4">
           <div className="flex">
-            <div className={`bg-secondary p-2.5 rounded-lg ${backgroundColor}`}>
-              {icon}
-            </div>
+            <div className={`p-2.5 rounded-lg ${backgroundColor}`}>{icon}</div>
           </div>
           <div>
             <p className="text-foreground text-sm font-semibold mb-2">
