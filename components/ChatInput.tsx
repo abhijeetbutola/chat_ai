@@ -2,15 +2,30 @@
 
 import Image from "next/image";
 import Button from "./Button";
-import { ReactEventHandler, useState } from "react";
+import { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
+import { useChat } from "@/context/chatContext";
+import { fetchStreamedChat } from "@/lib/openai";
 
 function ChatInput() {
   const [input, setInput] = useState("");
+  const { messages, addMessage, updateLastMessage } = useChat();
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!input.trim()) return;
     console.log(input);
+
+    addMessage({ role: "user", content: input });
+    addMessage({ role: "assistant", content: "" });
+
+    await fetchStreamedChat(
+      [...messages, { role: "user", content: input }],
+      (token) => {
+        updateLastMessage(token);
+      }
+    );
+
+    setInput("");
   };
   return (
     <div className="flex gap-2 items-end">

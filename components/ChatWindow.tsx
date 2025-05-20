@@ -1,14 +1,11 @@
+import { Message } from "@/context/chatContext";
 import ChatMessage from "./ChatMessage";
 
-function ChatWindow({
-  messages,
-}: {
-  messages: { id: number; sender: string; text: string }[];
-}) {
+function ChatWindow({ messages }: { messages: Message[] }) {
   return (
     <div className="flex-1 overflow-y-auto bg-background">
-      {messages.map((msg) => (
-        <ChatMessage key={msg.id} {...msg} />
+      {messages.map((msg, index) => (
+        <ChatMessage key={index} message={msg} />
       ))}
     </div>
   );

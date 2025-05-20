@@ -1,13 +1,8 @@
-function ChatMessage({
-  id,
-  sender,
-  text,
-}: {
-  id: number;
-  sender: string;
-  text: string;
-}) {
-  const isUser = sender === "user";
+import { Message } from "@/context/chatContext";
+
+function ChatMessage({ message }: { message: Message }) {
+  const { role, content } = message;
+  const isUser = role === "user";
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"} pb-6`}>
       <div
@@ -17,7 +12,7 @@ function ChatMessage({
             : "bg-background border border-muted"
         }`}
       >
-        {text}
+        {content}
       </div>
     </div>
   );
