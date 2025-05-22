@@ -21,7 +21,7 @@ function MessageSection() {
   const { messages } = useChat();
 
   return (
-    <div className="flex flex-col min-h-screen pt-20 pb-6 lg:px-[180px]">
+    <div className="flex flex-col h-screen pt-20 pb-6 lg:px-[180px]">
       {messages.length > 0 ? (
         <ChatWindow messages={messages} />
       ) : (

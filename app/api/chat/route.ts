@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   const { messages } = await req.json();
 
   const stream = await openai.responses.create({
-    model: "gpt-4.1", // or "gpt-4.1" or whichever you're using
+    model: "gpt-4.1-nano", // or "gpt-4.1" or whichever you're using
     input: messages,
     stream: true,
   });
@@ -17,27 +17,26 @@ export async function POST(req: NextRequest) {
   const encoder = new TextEncoder();
   const readable = new ReadableStream({
     async start(controller) {
+      const encoder = new TextEncoder();
+
       try {
         for await (const event of stream) {
-          // Only care about text delta updates
           if (event.type === "response.output_text.delta") {
-            controller.enqueue(encoder.encode(event.delta));
+            controller.enqueue(encoder.encode(`data: ${event.delta}\n\n`));
           }
 
-          // Handle stream complete
           if (event.type === "response.completed") {
+            controller.enqueue(encoder.encode("data: [DONE]\n\n"));
             controller.close();
           }
 
-          // Optionally handle errors or special cases
           if (event.type === "error") {
-            console.error("Streaming error:", event);
-            controller.enqueue(encoder.encode("❗ An error occurred."));
+            controller.enqueue(encoder.encode("data: ❗ Error occurred\n\n"));
             controller.close();
           }
         }
       } catch (err) {
-        controller.enqueue(encoder.encode("❗ Unexpected error"));
+        controller.enqueue(encoder.encode("data: ❗ Unexpected error\n\n"));
         controller.close();
       }
     },
@@ -45,8 +44,9 @@ export async function POST(req: NextRequest) {
 
   return new Response(readable, {
     headers: {
-      "Content-Type": "text/plain",
+      "Content-Type": "text/event-stream",
       "Cache-Control": "no-cache",
+      Connection: "keep-alive",
     },
   });
 }

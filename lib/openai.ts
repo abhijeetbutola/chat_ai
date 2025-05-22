@@ -7,16 +7,39 @@ export async function fetchStreamedChat(
     body: JSON.stringify({ messages }),
   });
 
-  if (!res.ok || !res.body) throw new Error("Failed to connect to stream");
-
-  const reader = res.body.getReader();
+  const reader = res.body?.getReader();
   const decoder = new TextDecoder("utf-8");
+  let buffer = "";
+
+  if (!reader) {
+    throw new Error(
+      "Response body is undefined or does not support streaming."
+    );
+  }
 
   while (true) {
-    const { done, value } = await reader.read();
+    const { value, done } = await reader.read();
     if (done) break;
 
-    const chunk = decoder.decode(value);
-    onToken(chunk); // Use this to update UI with new text chunks
+    buffer += decoder.decode(value, { stream: true });
+
+    const lines = buffer.split("\n\n");
+
+    // Leave last line in buffer if it's incomplete
+    buffer = lines.pop() || "";
+
+    for (const line of lines) {
+      // const trimmed = line.trim();
+
+      // if (trimmed.startsWith("data: ")) {
+      // const data = trimmed.replace(/^data:\s*/, "");
+
+      if (line.startsWith("data: ")) {
+        const data = line.slice("data: ".length);
+
+        if (data === "[DONE]") return;
+        onToken(data); // ✅ Just delta — append it
+      }
+    }
   }
 }

@@ -4,7 +4,11 @@ function ChatMessage({ message }: { message: Message }) {
   const { role, content } = message;
   const isUser = role === "user";
   return (
-    <div className={`flex ${isUser ? "justify-end" : "justify-start"} pb-6`}>
+    <div
+      className={`flex ${
+        isUser ? "justify-end" : "justify-start whitespace-pre-wrap"
+      } pb-6`}
+    >
       <div
         className={`p-3 rounded-lg ${
           isUser

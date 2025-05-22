@@ -13,7 +13,6 @@ function ChatInput() {
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!input.trim()) return;
-    console.log(input);
 
     addMessage({ role: "user", content: input });
     addMessage({ role: "assistant", content: "" });
@@ -45,7 +44,7 @@ function ChatInput() {
       />
       <Button
         type="submit"
-        className={`flex gap-1 justify-center items-center h-full ${
+        className={`flex gap-1 justify-center items-center ${
           !input.trim() ? "cursor-not-allowed" : ""
         } bg-primary text-primary-foreground text-sm font-medium px-3.5 py-2.5 rounded`}
         onClick={handleSubmit}
