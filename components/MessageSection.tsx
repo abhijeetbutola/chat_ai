@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import ChatInput from "./ChatInput";
 import ChatWelcome from "./ChatWelcome";
 import ChatWindow from "./ChatWindow";
 import { useChat } from "@/context/chatContext";
@@ -21,13 +19,12 @@ function MessageSection() {
   const { messages } = useChat();
 
   return (
-    <div className="flex flex-col h-screen pt-20 pb-6 lg:px-[180px]">
+    <div className="h-full flex-1 w-full pt-20 pb-6 lg:px-[180px]">
       {messages.length > 0 ? (
         <ChatWindow messages={messages} />
       ) : (
         <ChatWelcome />
       )}
-      <ChatInput />
     </div>
   );
 }

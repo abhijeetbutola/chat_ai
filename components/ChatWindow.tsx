@@ -3,7 +3,7 @@ import ChatMessage from "./ChatMessage";
 
 function ChatWindow({ messages }: { messages: Message[] }) {
   return (
-    <div className="flex-1 overflow-y-auto bg-background">
+    <div className="w-full bg-background">
       {messages.map((msg, index) => (
         <ChatMessage key={index} message={msg} />
       ))}

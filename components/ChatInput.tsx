@@ -11,11 +11,17 @@ function ChatInput() {
   const [input, setInput] = useState("");
   const { messages, addMessage, updateLastMessage } = useChat();
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (
+    e:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
     if (!input.trim()) return;
 
     addMessage({ role: "user", content: input });
     addMessage({ role: "assistant", content: "" });
+
+    setInput("");
 
     await fetchStreamedChat(
       [...messages, { role: "user", content: input }],
@@ -23,11 +29,9 @@ function ChatInput() {
         updateLastMessage(token);
       }
     );
-
-    setInput("");
   };
   return (
-    <div className="flex gap-2 items-end">
+    <div className="flex gap-2 items-end pb-6 sm:px-4 md:px-8 lg:px-[196px]">
       <TextareaAutosize
         value={input}
         minRows={1}
@@ -37,7 +41,7 @@ function ChatInput() {
         onKeyDown={(e) => {
           if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
-            // Send message
+            handleSubmit(e);
           }
         }}
         className="w-full py-2.5 resize-none px-3 rounded-md border text-sm bg-secondary-foreground"

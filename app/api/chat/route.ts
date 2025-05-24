@@ -1,4 +1,4 @@
-import { OpenAI } from "openai";
+import OpenAI from "openai";
 import { NextRequest } from "next/server";
 
 const openai = new OpenAI({
@@ -14,7 +14,6 @@ export async function POST(req: NextRequest) {
     stream: true,
   });
 
-  const encoder = new TextEncoder();
   const readable = new ReadableStream({
     async start(controller) {
       const encoder = new TextEncoder();

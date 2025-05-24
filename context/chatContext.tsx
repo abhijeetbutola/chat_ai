@@ -34,17 +34,11 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const updateLastMessage = useCallback((text: string) => {
-    // Add all characters to the queue
-    tokenQueue.current.push(...text.split(""));
+    tokenQueue.current.push(...text.split(/(?<=\n)|(?=\n)/));
 
-    // If an interval is already running, let it handle the rest
-    if (typingInterval.current) return;
-
-    typingInterval.current = setInterval(() => {
+    const processQueue = () => {
       const nextChar = tokenQueue.current.shift();
-
       if (!nextChar) {
-        clearInterval(typingInterval.current!);
         typingInterval.current = null;
         return;
       }
@@ -58,7 +52,14 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         };
         return updated;
       });
-    }, 10);
+
+      const delay = nextChar === " " ? 5 : 15;
+      typingInterval.current = setTimeout(processQueue, delay);
+    };
+
+    if (!typingInterval.current) {
+      typingInterval.current = setTimeout(processQueue, 0);
+    }
   }, []);
 
   const clearMessages = () => {
