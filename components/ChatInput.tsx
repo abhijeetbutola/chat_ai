@@ -23,10 +23,14 @@ function ChatInput() {
 
     setInput("");
 
+    let fullMessage = "";
+
     await fetchStreamedChat(
       [...messages, { role: "user", content: input }],
       (token) => {
-        updateLastMessage(token);
+        // console.log("RAW TOKEN:", JSON.stringify(token));
+        fullMessage += token;
+        updateLastMessage(fullMessage); // This REPLACES the message
       }
     );
   };

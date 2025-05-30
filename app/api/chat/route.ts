@@ -9,7 +9,17 @@ export async function POST(req: NextRequest) {
   const { messages } = await req.json();
 
   const stream = await openai.responses.create({
-    model: "gpt-4.1-nano", // or "gpt-4.1" or whichever you're using
+    model: "gpt-4.1-mini", // or "gpt-4.1" or whichever you're using
+    instructions: `
+You are a helpful assistant. 
+Respond in **valid Markdown**, including correct usage of:
+- Headings (e.g., #, ##),
+- Bullet lists (use dashes or asterisks),
+- Code blocks (use triple backticks),
+- Paragraphs (use \\n between paragraphs and sections).
+
+DO NOT skip line breaks. Output must be copy-pasteable as Markdown.
+`.trim(),
     input: messages,
     stream: true,
   });

@@ -22,23 +22,19 @@ export async function fetchStreamedChat(
     if (done) break;
 
     buffer += decoder.decode(value, { stream: true });
-
+    // console.log(buffer);
     const lines = buffer.split("\n\n");
+    // console.log(lines);
 
     // Leave last line in buffer if it's incomplete
     buffer = lines.pop() || "";
 
     for (const line of lines) {
-      // const trimmed = line.trim();
-
-      // if (trimmed.startsWith("data: ")) {
-      // const data = trimmed.replace(/^data:\s*/, "");
-
       if (line.startsWith("data: ")) {
         const data = line.slice("data: ".length);
-
+        // console.log(JSON.stringify(data));
         if (data === "[DONE]") return;
-        onToken(data); // ✅ Just delta — append it
+        onToken(data);
       }
     }
   }

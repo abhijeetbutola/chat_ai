@@ -24,14 +24,20 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     setMessages((prev) => [...prev, msg]);
   };
 
+  let assistantBuffer = "";
+
   const updateLastMessage = useCallback((text: string) => {
     setMessages((prev) => {
       const updated = [...prev];
       const last = updated[updated.length - 1];
-      updated[updated.length - 1] = {
-        ...last,
-        content: last.content + text,
-      };
+
+      if (last.role === "assistant") {
+        updated[updated.length - 1] = {
+          ...last,
+          content: text,
+        };
+      }
+
       return updated;
     });
   }, []);
