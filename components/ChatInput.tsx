@@ -79,11 +79,11 @@ function ChatInput() {
           }
         }}
         disabled={isLoading}
-        className="w-full py-2.5 resize-none px-3 rounded-md border text-sm bg-secondary-foreground disabled:opacity-50"
+        className="w-full h- py-2.5 resize-none px-3 rounded-md border text-sm bg-secondary-foreground disabled:opacity-50"
       />
       <Button
         type="submit"
-        className={`flex gap-1 justify-center items-center ${
+        className={`flex gap-1 justify-center items-center min-h-8 ${
           !input.trim() || isLoading ? "cursor-not-allowed" : ""
         } bg-primary text-primary-foreground text-sm font-medium px-3.5 py-2.5 rounded`}
         onClick={handleSubmit}
