@@ -22,8 +22,10 @@ export async function POST(req: NextRequest) {
       try {
         for await (const event of stream) {
           if (event.type === "response.output_text.delta") {
-            console.log(JSON.stringify(event.delta));
-            controller.enqueue(encoder.encode(`data: ${event.delta}\n\n`));
+            // console.log(JSON.stringify(event.delta));
+            controller.enqueue(
+              encoder.encode(`data: ${JSON.stringify(event.delta)}\n\n`)
+            );
           }
 
           if (event.type === "response.completed") {

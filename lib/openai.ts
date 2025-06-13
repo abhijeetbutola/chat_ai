@@ -45,9 +45,21 @@ export async function fetchStreamedChat(
           if (data === "[DONE]") return;
 
           // Debug: uncomment to see what tokens are received
-          console.log("Token received:", JSON.stringify(data));
+          // console.log("Token received:", JSON.stringify(data));
 
-          onToken(data);
+          // Parse the JSON data if it's not just a string
+          try {
+            const parsedData = JSON.parse(data);
+            if (typeof parsedData === "string") {
+              onToken(parsedData);
+            } else {
+              console.warn("Received non-string data:", parsedData);
+            }
+          } catch (error) {
+            console.error("Error parsing data:", error, "Raw data:", data);
+            // If parsing fails, treat it as a raw string
+            onToken(data);
+          }
         }
       }
     }

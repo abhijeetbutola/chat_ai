@@ -79,7 +79,7 @@ function ChatInput() {
           }
         }}
         disabled={isLoading}
-        className="w-full h- py-2.5 resize-none px-3 rounded-md border text-sm bg-secondary-foreground disabled:opacity-50"
+        className="w-full py-2.5 resize-none px-3 rounded-md border text-sm bg-secondary-foreground disabled:opacity-50"
       />
       <Button
         type="submit"
