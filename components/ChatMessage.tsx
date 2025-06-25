@@ -44,7 +44,7 @@ const ChatMessage = memo(({ message }: ChatMessageProps) => {
                   if (!className) {
                     return (
                       <code
-                        className="bg-gray-200 dark:bg-gray-700 px-1.5 py-0.5 rounded text-sm font-mono"
+                        className="bg-gray-900 dark:bg-gray-700 px-1.5 py-0.5 rounded text-sm font-mono"
                         {...props}
                       >
                         {children}

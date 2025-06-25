@@ -65,25 +65,27 @@ function ChatInput() {
   };
 
   return (
-    <div className="flex gap-2 items-end pb-6 sm:px-4 md:px-8 lg:px-[196px]">
-      <TextareaAutosize
-        value={input}
-        minRows={1}
-        maxRows={8}
-        placeholder="Ask me anything..."
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            handleSubmit(e);
-          }
-        }}
-        disabled={isLoading}
-        className="w-full py-2.5 resize-none px-3 rounded-md border text-sm bg-secondary-foreground disabled:opacity-50"
-      />
+    <div className="flex gap-2 items-start pb-6 sm:px-4 md:px-8 lg:px-[196px]">
+      <div className="flex-1">
+        <TextareaAutosize
+          value={input}
+          minRows={1}
+          maxRows={8}
+          placeholder="Ask me anything..."
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSubmit(e);
+            }
+          }}
+          disabled={isLoading}
+          className="w-full py-2.5 resize-none px-3 rounded-md border text-sm bg-secondary-foreground disabled:opacity-50"
+        />
+      </div>
       <Button
         type="submit"
-        className={`flex gap-1 justify-center items-center min-h-8 ${
+        className={`flex gap-1 justify-center items-center h-[42px] ${
           !input.trim() || isLoading ? "cursor-not-allowed" : ""
         } bg-primary text-primary-foreground text-sm font-medium px-3.5 py-2.5 rounded`}
         onClick={handleSubmit}
